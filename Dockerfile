@@ -4,7 +4,10 @@
 FROM nvcr.io/nvidia/pytorch:21.10-py3
 
 # Install linux packages
-RUN apt update && apt install -y zip htop screen libgl1-mesa-glx
+RUN echo 'Etc/UTC' > /etc/timezone && \
+    ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
+    apt-get update && apt-get install -q -y tzdata && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y zip htop screen libgl1-mesa-glx libqt5gui5
 
 # Install python dependencies
 COPY requirements.txt .
